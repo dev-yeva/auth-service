@@ -22,6 +22,7 @@ func main() {
 	if storagePath == "" {
 		panic("storage-path is empty")
 	}
+
 	if migrationPath == "" {
 		panic("migration-path is empty")
 	}
@@ -31,7 +32,20 @@ func main() {
 		panic(err)
 	}
 
-	if err := m.Up(); err != nil {
+	args := flag.Args()
+	if len(args) != 1 {
+		panic("expected exactly one command: up or down")
+	}
+	switch args[0] {
+	case "up":
+		err = m.Up()
+	case "down":
+		err = m.Down()
+	default:
+		panic("unknown command")
+	}
+
+	if err != nil {
 		if errors.Is(err, migrate.ErrNoChange) {
 			fmt.Println("no migrations to apply")
 			return
@@ -39,5 +53,5 @@ func main() {
 			panic(err)
 		}
 	}
-	fmt.Println("applied migrations")
+	fmt.Printf("%s migrations completed\n", args[0])
 }

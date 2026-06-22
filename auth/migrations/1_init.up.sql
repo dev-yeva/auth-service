@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS users
     password_hash BLOB NOT NULL
 );
 
-INSERT INTO users (email, is_admin, password_hash) 
+INSERT INTO users (email, is_admin, password_hash)  
+                                -- hash for "ImTheBossHere" 
 VALUES ('boss@gmail.com', true, '$2a$04$zr08lx1iof//9imZMh47h.9O3c0frMP0D4nzH6NUEFvUCYgQTPyAC');
 
 CREATE INDEX IF NOT EXISTS idx_email ON users (email);
