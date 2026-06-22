@@ -1,0 +1,14 @@
+version: '3'
+
+tasks:
+  run-server:
+    desc: "Run auth server"
+    dir: ./auth
+    cmds:
+      - go run ./cmd/main.go --config_path=./config/prod.yaml
+
+  run-client:
+    desc: "Run auth client"
+    dir: ./client
+    cmds:
+      - go run ./cmd/main.go

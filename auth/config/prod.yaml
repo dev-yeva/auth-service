@@ -1,0 +1,6 @@
+env: "prod"
+storage_path: "./internal/storage/auth.sqlite"
+token_ttl: 15m
+grpc:
+  port: 5267
+  timeout: 10s

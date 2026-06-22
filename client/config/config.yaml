@@ -1,0 +1,3 @@
+address: "localhost:5267"
+timeout: "5s"
+retry_count: 3

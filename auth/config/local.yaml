@@ -1,0 +1,6 @@
+env: "local"
+storage_path: "./internal/storage/auth.sqlite"
+token_ttl: 1h
+grpc:
+  port: 5267
+  timeout: 1h
