@@ -1,4 +1,4 @@
-module github.com/dev-yeva/auth_protos
+module github.com/dev-yeva/auth-service/protos
 
 go 1.26.3
 
