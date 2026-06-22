@@ -1,0 +1,13 @@
+deps:
+  - github.com/bufbuild/protovalidate
+
+generate:
+  inputs:
+    - directory: api
+    
+  plugins:
+    - name: go
+      out: gen
+
+    - name: go-grpc
+      out: gen
