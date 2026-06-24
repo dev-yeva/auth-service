@@ -29,5 +29,5 @@ cd auth-service
 | `task download-deps` | Download dependencies |
 | `task migrate-up` | Create database tables |
 | `task migrate-down` | Delete database tables |
-| `task run-server` | Run the server |
-| `task run-client` | Run the client |
+| `task run-server` | Run server |
+| `task run-client` | Run client |
