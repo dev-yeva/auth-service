@@ -15,17 +15,17 @@ type Storage struct {
 	db *sql.DB
 }
 
-func New(storagePath string) (*Storage, error) {
+func New(storagePath string) *Storage {
 	db, err := sql.Open("sqlite3", storagePath)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
 	if err := db.Ping(); err != nil {
-		return nil, err
+		panic(err)
 	}
 
-	return &Storage{db: db}, nil
+	return &Storage{db: db}
 }
 
 func (s *Storage) SaveUser(ctx context.Context, email string, passwordHash []byte) (int64, error) {

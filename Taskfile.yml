@@ -1,15 +1,21 @@
 version: '3'
 
 tasks:
+  download-deps:
+    desc: "Download client & server dependencies"
+    cmds:
+      - cd auth && go mod download
+      - cd ..
+      - cd client && go mod download
 
   migrate-up:
-    desc: "create database tables"
+    desc: "Create database tables"
     dir: ./auth
     cmds:
       - go run ./cmd/migrator --storage-path=./internal/storage/auth.sqlite --migration-path=./migrations up
 
   migrate-down:
-    desc: "delete database tables"
+    desc: "Delete database tables"
     dir: ./auth
     cmds:
       - go run ./cmd/migrator --storage-path=./internal/storage/auth.sqlite --migration-path=./migrations down

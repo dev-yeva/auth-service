@@ -4,7 +4,6 @@ import (
 	"auth/internal/handlers"
 	"auth/internal/service"
 	"auth/internal/storage/sqlite"
-	"auth/lib"
 	"fmt"
 	"log/slog"
 	"net"
@@ -20,7 +19,7 @@ type App struct {
 }
 
 func New(logger *slog.Logger, port int, storagePath string, tokenTTL time.Duration) *App {
-	storage := lib.Must(sqlite.New(storagePath))
+	storage := sqlite.New(storagePath)
 	authService := service.New(logger, storage, storage, storage, tokenTTL)
 
 	gRPCServer := grpc.NewServer()
@@ -47,7 +46,7 @@ func (a *App) Run() error {
 		return fmt.Errorf("%s: %w", op, err)
 	}
 
-	a.logger.Info("Starting gRPC server", args...)
+	a.logger.Info("starting gRPC server", args...)
 
 	if err := a.gRPCServer.Serve(l); err != nil {
 		return fmt.Errorf("%s: %w", op, err)
@@ -66,6 +65,6 @@ func (a *App) Stop(attrs ...slog.Attr) {
 		args = append(args, attr)
 	}
 
-	a.logger.Info("Stopping gRPC server", args...)
+	a.logger.Info("stopping gRPC server", args...)
 	a.gRPCServer.GracefulStop()
 }

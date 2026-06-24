@@ -3,7 +3,6 @@ package main
 import (
 	"auth/app"
 	"auth/internal/config"
-	"auth/lib"
 	"fmt"
 	"log/slog"
 	"os"
@@ -21,7 +20,7 @@ const (
 func main() {
 	config := config.MustLoad()
 
-	logger := lib.Must(CreateLogger(envLocal))
+	logger := MustCreateLogger(envLocal)
 
 	application := app.New(logger, config.GRPC.Port, config.StoragePath, config.TokenTTL)
 	go application.MustRun()
@@ -29,7 +28,7 @@ func main() {
 	handleInterruption(application)
 }
 
-func CreateLogger(env string) (*slog.Logger, error) {
+func MustCreateLogger(env string) *slog.Logger {
 	var handler slog.Handler
 
 	switch env {
@@ -38,10 +37,9 @@ func CreateLogger(env string) (*slog.Logger, error) {
 	case envProd:
 		handler = slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo})
 	default:
-		return nil, fmt.Errorf("env must be either '%s' or '%s'", envLocal, envProd)
+		panic(fmt.Sprintf("env must be either '%s' or '%s'", envLocal, envProd))
 	}
-
-	return slog.New(handler), nil
+	return slog.New(handler)
 }
 
 func handleInterruption(application *app.App) {
